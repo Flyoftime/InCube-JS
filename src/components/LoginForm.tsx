@@ -8,7 +8,6 @@ import { SyntheticEvent, useState } from "react";
 
 const LoginForm = () => {
   const router = useRouter();
-//   const router = useRouter();
 
 //   const [email, setEmail] = useState('')
 //   const [password, setPassword] = useState('')
