@@ -26,7 +26,6 @@ const LoginForm = () => {
 //     setAlert(true)
 //   }else {
 //     setAlert(false);
-//     router.push('/');
 //   }
 
 //   setEmail("")
