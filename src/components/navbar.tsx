@@ -11,7 +11,7 @@ const navbar = () => {
     <a href="/" className='text text-white font-bold hover:underline transition-all duration-100'>Home</a>
     <a href='/features' className='text text-white font-bold hover:underline transition-all duration-100'>Features</a>
     <a href='/about' className='text text-white font-bold hover:underline transition-all duration-100'>About</a>
-    <a href='/login' className='text text-[#3F2013] font-bold hover:underline transition-all duration-100'>Sign In</a>
+    <a href='/login' className='text text-[#B21616] font-bold hover:underline transition-all duration-100'>Sign In</a>
   </div>
 </nav>
   )
