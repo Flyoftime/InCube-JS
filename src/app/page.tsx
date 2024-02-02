@@ -1,14 +1,17 @@
 import LoginForm from "@/components/LoginForm";
 import Image from "next/image";
 import Navbar from "@/components/navbar";
+import Landingpage from "@/components/landingpage";
+import Fitur from "@/components/fitur";
+import AboutUs from "@/components/aboutUs";
 
 export default function Home() {
   return (
     <div>
       <Navbar/>  
-      <div className="fixed w-full h-full top-0 left-0 -mt-96 overflow-hidden">
-        <img src="/assets/Ellipse 1.png" className="w-full h-full -mt-18" />
-      </div>
+      <Landingpage/>
+      <Fitur/>
+      <AboutUs/>
     </div>
 
   );
