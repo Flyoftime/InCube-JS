@@ -7,12 +7,12 @@ import AboutUs from "@/components/aboutUs";
 
 export default function Home() {
   return (
-    <div>
+    <main>
       <Navbar/>  
       <Landingpage/>
       <Fitur/>
       <AboutUs/>
-    </div>
+    </main>
 
   );
 }
