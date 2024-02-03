@@ -4,6 +4,7 @@ import Navbar from "@/components/navbar";
 import Landingpage from "@/components/landingpage";
 import Fitur from "@/components/fitur";
 import AboutUs from "@/components/aboutUs";
+import Footer from "@/components/footer";
 
 export default function Home() {
   return (
@@ -12,6 +13,7 @@ export default function Home() {
       <Landingpage/>
       <Fitur/>
       <AboutUs/>
+      <Footer/>
     </main>
 
   );
