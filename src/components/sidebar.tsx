@@ -1,10 +1,13 @@
 import React from 'react'
 import { IoHomeOutline } from "react-icons/io5";
+
+
 const Sidebar = () => {
   return (
     <div className='flex'>
+        
         <div className='bg-[#FFB800] h-screen p-5 pt-8 w-52'>
-        <div className="avatar">
+         <div className="avatar">
             <div className="w-24 rounded-full">
                 <img src="https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg" />
             </div>
@@ -30,11 +33,11 @@ const Sidebar = () => {
             <a href="">Settings</a>
             </div>
         </div>
-            <div>
-                <img src="assets/logo2 2.png" alt="" className='object-[left_bottom] '/>
-            </div>
+            <img src="assets/logo2 2.png" alt="" className='object-left-bottom bottom-4 left-0 absolute w-auto h-16'/>
         </div>
-    </div>
+        </div>
+
+
   )
   
 }
