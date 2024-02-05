@@ -10,6 +10,7 @@ interface State {
 }
 
 class App extends Component<{}, State> {
+    
     constructor() {
         // @ts-ignore
         super();
@@ -29,6 +30,7 @@ class App extends Component<{}, State> {
     render() {
         const { handleClickSignUpButton, handleClickSignInButton } = this;
         const { rightPanelActive } = this.state;
+        
         return (
             <div className="App">
                 <div
