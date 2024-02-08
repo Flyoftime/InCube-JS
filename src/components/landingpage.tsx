@@ -9,6 +9,7 @@ const Landingpage = () => {
         <h1 >Reach The</h1>
         <h1 >Effisiency</h1>
         <h1>Of Farming</h1>
+        
        </div>
     </div>
     

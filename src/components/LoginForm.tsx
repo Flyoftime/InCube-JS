@@ -60,7 +60,7 @@ const LoginForm = () => {
         <input type="email" placeholder="Email" />
         <input type="password" placeholder="Password" />
 
-       <button type='button' onClick={()=> router.push('/')} className="form-button">Sign In</button>
+       <button type='button' onClick={()=> router.push('/dashboard')} className="form-button">Sign In</button>
         <a className="find-password" href="#">Forget Password</a>
     </form>
 </div>

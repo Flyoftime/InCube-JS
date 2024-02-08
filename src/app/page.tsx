@@ -27,6 +27,7 @@ export default function Home() {
       <Landingpage/>
       <Fitur/>
       <AboutUs/>
+      <Footer/>
     </main>
 
   );

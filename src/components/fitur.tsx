@@ -4,7 +4,7 @@ const Fitur = () => {
   return (
     <div>
         <div className=''>
-            <h1 className='text-lg text-[#000] text-center'>Features</h1>
+            <h1 className='text-lg text-[#000] text-center font-semibold'>Features</h1>
             <h1 className='text-xl text-[#000] text-center font-bold'>What We Offer</h1>
             <p className='text text-[#000] text-center'>We Create Features That Helps You To Hatch Your 
             Egg Faster 

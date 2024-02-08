@@ -19,16 +19,19 @@ const authOptions: NextAuthOptions = {
                 password: { label: "Password", type: "password" },
             },
             async authorize(credentials) {
-                const {email,password} = credentials as {
+                const {email,password,username} = credentials as {
                     email: string;
                     password: string;
+                    username: string;
                 };
                 const user: any = {
                     id: 1,
                     email: email,
-                    password: password
+                    password: password,
+                    username: username,
                 };
                 if(user) {
+                    console.log(user);
                     return user;    
                 } else {
                    return null;    
@@ -41,12 +44,14 @@ const authOptions: NextAuthOptions = {
             if(account?.provider === "credentials") {
                 token.email = user.email
             }
+            console.log({token, account , user});
             return token;
         },
         async session({session, token}: any){
             if('email' in token) {
                 session.user.email = token.email;
             }
+            console.log({session, token});
             return session;
         }
     }
