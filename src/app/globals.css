@@ -38,3 +38,13 @@ body {
 }
 
 
+#LandingPage {
+  background-image: url('../../public/assets/Group\ 26953.png');
+  background-position: top;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.font-montserrat {
+  font-family: 'Monserrat', sans-serif;
+}

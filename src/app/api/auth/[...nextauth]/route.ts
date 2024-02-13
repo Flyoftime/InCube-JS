@@ -30,8 +30,7 @@ const authOptions: NextAuthOptions = {
                     password: password,
                     username: username,
                 };
-                if(user) {
-                    console.log(user);
+                if(user) { 
                     return user;    
                 } else {
                    return null;    
@@ -44,14 +43,12 @@ const authOptions: NextAuthOptions = {
             if(account?.provider === "credentials") {
                 token.email = user.email
             }
-            console.log({token, account , user});
             return token;
         },
         async session({session, token}: any){
             if('email' in token) {
                 session.user.email = token.email;
             }
-            console.log({session, token});
             return session;
         }
     }

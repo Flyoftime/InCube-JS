@@ -1,10 +1,36 @@
 'use client'
-import React, { Component } from 'react';
+import axios from 'axios';
+import { useRouter } from "next/navigation";
+import React, { SyntheticEvent, useState } from 'react'
 
-class SignUp extends Component {
-    render() {
-        return (
-            <div className="form-container sign-up-container">
+const SignUp = () => {
+    const router = useRouter();
+
+    const [username, setUsername] = useState("");
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const [alert, setAlert] = useState(false);
+
+    const handleRegister = async (e: SyntheticEvent) => {
+        e.preventDefault();
+        const response = await axios.post("/api/register",{
+            username: username,
+            email: email,
+            password: password,
+        });
+
+        if (response.status === 201 || response.status === 200) {
+            router.push("/login");
+        } else{
+            setAlert(true);
+        } 
+        
+        setUsername("");
+        setEmail("");
+        setPassword("");
+    }
+  return (
+    <div className="form-container sign-up-container">
                 <form className="form" action="#">
                     <h1 className="form-title-singin">Create Account</h1>
                     <input type="text" placeholder="Username" />
@@ -13,8 +39,7 @@ class SignUp extends Component {
                     <button type='button' className="form-button">Sign Up</button>
                 </form>
             </div>
-        );
-    }
+  )
 }
 
-export default SignUp;
+export default SignUp

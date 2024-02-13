@@ -10,33 +10,33 @@ class Overlay extends Component<Props> {
     
     render() {
         const { handleClickSignUpButton, handleClickSignInButton } = this.props;
-        const[isLoading, setIsLoading] = useState(false);
-        const [error,setError]=useState("");
-        const {push} = useRouter();
-        const handleSubmit = async (event: any) => {
-            event.preventDefault();
-            const data = {
-                email: event.target.email.value,
-                username: event.target.username.value,
-                password: event.target.password.value,
-            };
-            const result = await fetch("/api/register", {
-                method: "POST",
-                headers:{
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify(data),
-            });
+        // const[isLoading, setIsLoading] = useState(false);
+        // const [error,setError]=useState("");
+        // const {push} = useRouter();
+        // const handleSubmit = async (event: any) => {
+        //     event.preventDefault();
+        //     const data = {
+        //         email: event.target.email.value,
+        //         username: event.target.username.value,
+        //         password: event.target.password.value,
+        //     };
+        //     const result = await fetch("/api/register", {
+        //         method: "POST",
+        //         headers:{
+        //             "Content-Type": "application/json",
+        //         },
+        //         body: JSON.stringify(data),
+        //     });
 
-            if(result.status === 200){
-                event.target.reset();
-                setIsLoading(false);
-                push("/login");
-            } else {
-                setIsLoading(false);
-                setError(result.status=== 400 ?"Email already exists":"");
-            }
-        };
+        //     if(result.status === 200){
+        //         event.target.reset();
+        //         setIsLoading(false);
+        //         push("/login");
+        //     } else {
+        //         setIsLoading(false);
+        //         setError(result.status=== 400 ?"Email already exists":"");
+        //     }
+        // };
         return (
             <div className="overlay-container">
                 <div className="overlay">

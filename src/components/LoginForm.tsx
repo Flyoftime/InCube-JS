@@ -6,31 +6,39 @@ import { useRouter } from "next/navigation";
 import { SyntheticEvent, useState } from "react";
 
 
+
 const LoginForm = () => {
   const router = useRouter();
 
-//   const [email, setEmail] = useState('')
-//   const [password, setPassword] = useState('')
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
 
-//   const [alert, setAlert] = useState(false)
-//   const handleLogin = async(e:SyntheticEvent) => {
-//     e.preventDefault();
+  const [alert, setAlert] = useState(false)
+  const handleLogin = async(e:SyntheticEvent) => {
+    e.preventDefault();
 
-//     const signInData = await signIn('credentials', {
-//       email: email,
-//       password: password,
-//       redirect: false,
-//   })
+    const signInData = await signIn('credentials', {
+      email: email,
+      password: password,
+      redirect: false,
+  })
 
-//   if(signInData?.error){
-//     setAlert(true)
-//   }else {
-//     setAlert(false);
-//   }
+  if(signInData?.error){
+    setAlert(true)
+  }else {
+    setAlert(false);
+  }
+    await axios.post('/api/login',
+    {
+      email: email,
+      password: password
+    })
 
-//   setEmail("")
-//     setPassword("")
-// }
+    router.push('/dashboard')
+
+  setEmail("")
+    setPassword("")
+}
 
     return (
     <div className="form-container sign-in-container">

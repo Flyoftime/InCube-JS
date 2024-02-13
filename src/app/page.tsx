@@ -1,5 +1,6 @@
 'use client'
 import LoginForm from "@/components/LoginForm";
+import Footer from "@/components/footer";
 import Image from "next/image";
 import Navbar from "@/components/navbar";
 import Landingpage from "@/components/landingpage";

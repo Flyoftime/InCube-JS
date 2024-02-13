@@ -2,17 +2,16 @@ import React from 'react'
 
 const Landingpage = () => {
   return (
-    <div>
-    <div className="w-full h-full top-0 left-0 -mt-96 ">
-        <img src="/assets/Ellipse 1.png" className="w-[100vw] h-[140vh]"  />
-       <div className="absolute text-5xl text-white top-[25vh] left-[20vw] -translate-x-1/2 -translate-y-1/2">
-        <h1 >Reach The</h1>
-        <h1 >Effisiency</h1>
-        <h1>Of Farming</h1>
-        
-       </div>
+    <div className='max-w-screen h-screen py-[250px] px-[154px] flex flex-col items-center gap-8' id='LandingPage'>
+    <div className='flex flex-col gap-8 w-full'>
+        <p className='font-montserrat font-bold text-[70.44px] text-white'>Reach the<br/>Efficiency<br/>of Farming</p>
+        <p className='font-montserrat font-medium text-[33.94px] text-white'>Order Our Smart incubator </p>
+        <button className='bg-[#ffd4d4] rounded-[40px] font-montserrat text-[24px] text-[#3f2013] px-8 py-4 font-semibold w-fit'>Order Now</button>
     </div>
-    
+    <div className='flex flex-col items-center gap-6'>
+        <p className='font-montserrat font-semibold text-[24px] text-white'>Trusted and Funded by </p>
+        <div className='w-[934px] h-[125px] rounded-[19px] bg-white shadow-[0_11px_15px_2px_rgba(0,0,0,0.11)]'></div>
+    </div>
     </div>
   )
 }
