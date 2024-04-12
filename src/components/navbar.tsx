@@ -1,4 +1,4 @@
-import {signIn} from 'next-auth/react';
+import { signIn } from 'next-auth/react'
 import React from 'react'
 
 
@@ -13,8 +13,9 @@ const navbar = ({scrollTop}:{scrollTop:any}) => {
     <a href="/" className='text text-white font-bold hover:underline transition-all duration-100'>Home</a>
     <a href='/features' className='text text-white font-bold hover:underline transition-all duration-100'>Features</a>
     <a href='/about' className='text text-white font-bold hover:underline transition-all duration-100'>About</a>
-    <a href='/login' className='text text-[#B21616] font-bold hover:underline transition-all duration-100'>Sign In</a>
-    <button onClick={()=> signIn()}>Sign in</button>
+    <a href='/login' className='text text-[#B21616] font-bold hover:underline transition-all duration-100' >Sign In</a>
+    <button  onClick={()=> signIn()} className='text text-[#B21616] font-bold hover:underline transition-all duration-100' >Sign In</button>
+    
   </div>
 </nav>
   )

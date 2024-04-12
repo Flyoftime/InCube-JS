@@ -45,6 +45,11 @@ body {
   background-size: cover;
 }
 
+#About  {
+  background-image: url('../../public/assets/bgabout.png');
+
+}
+
 .font-montserrat {
   font-family: 'Monserrat', sans-serif;
 }

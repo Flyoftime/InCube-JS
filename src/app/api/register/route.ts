@@ -1,27 +1,17 @@
-import { register } from "@/lib/firebase/service";
-import type { NextApiRequest, NextApiResponse } from "next";
+import { NextRequest, NextResponse } from "next/server";
+import { register } from "@/lib/firebase/service"
 
-type Data = {
-    status: boolean;
-    message: string;
-};
+export const POST = async(req: Request) => {
+    const body = await req.json();
 
-export default async function handler(
-    req: NextApiRequest,
-    res: NextApiResponse<Data>
-) {
-    if (req.method !== "POST") {
-       await register(
-        req.body,
-         ({status, message}:{ status: boolean; message: string; })=>{
-           if(status){
-            res.status(200).json({status, message});
-           } else {
-            res.status(400).json({status, message});
-           }
-       }
-    );
-    } else {
-        res.status(405).json({status:false, message:"Method no allowed"})
+    if (!body.username){
+        return NextResponse.json({status: 500, message: "username tidak boleh kosong"})
+    }else if (!body.email){
+        return NextResponse.json({status: 500, message: "email tidak boleh kosong"})
+    }else if(!body.password){
+        return NextResponse.json({status: 500, message: "password tidak boleh kosong"})
+    }else {
+        const res = await register(body)
+        return NextResponse.json({status: res.status, message: res.message})
     }
 }

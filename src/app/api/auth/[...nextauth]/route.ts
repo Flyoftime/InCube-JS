@@ -1,57 +1,67 @@
 import { NextAuthOptions } from "next-auth";
 import NextAuth from "next-auth/next";
-import  CredentialsProvider from "next-auth/providers/credentials";
-import { Session } from "next-auth";
-import Email from "next-auth/providers/email";
+import CredentialsProvider from "next-auth/providers/credentials";
+import { compare } from "bcrypt";
+import { login } from "@/lib/firebase/service";
 
-
-const authOptions: NextAuthOptions = {
+const authOptionts: NextAuthOptions = {
     session: {
-        strategy: "jwt",
+        strategy: "jwt"
     },
     secret: process.env.NEXTAUTH_SECRET,
     providers: [
         CredentialsProvider({
             type: "credentials",
-            name: "Credentials",
+            name: "credentials",
             credentials: {
-                email: {label: "Email", type: "email"},
+                email: { label: "Email", type: "email" },
                 password: { label: "Password", type: "password" },
+
             },
             async authorize(credentials) {
-                const {email,password,username} = credentials as {
+                const { email, password } = credentials as {
                     email: string;
                     password: string;
-                    username: string;
                 };
-                const user: any = {
-                    id: 1,
-                    email: email,
-                    password: password,
-                    username: username,
-                };
-                if(user) { 
-                    return user;    
+                const user: any = await login({email})
+                if (user){
+                    const passwordConfirm = await compare(password, user.password);
+                    if(passwordConfirm){
+                        return user;
+                    }
+                    return null;
                 } else {
-                   return null;    
+                    return null;
                 }
-            }
+                
+            },
         }),
     ],
+
     callbacks: {
-        jwt({token,account, profile, user}) {
-            if(account?.provider === "credentials") {
-                token.email = user.email
+        async jwt({ token, account, profile, user }: any) {
+            if (account?.provider === 'credentials') {
+                token.email = user.email;
+                token.fullname = user.fullname;
+
             }
             return token;
         },
-        async session({session, token}: any){
-            if('email' in token) {
+        async session ({session , token }: any ){
+            if ("email" in token) {
                 session.user.email = token.email;
             }
-            return session;
+            if ("fullname" in token) {
+                session.user.fullname = token.fullname;
+            }
+            return session
         }
+    },
+    pages: {
+        signIn: "/login",
     }
 };
 
-export default NextAuth(authOptions);
+const handler = NextAuth(authOptionts);
+export { 
+    handler as GET, handler as POST };

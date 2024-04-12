@@ -1,45 +1,81 @@
 'use client'
 import axios from 'axios';
 import { useRouter } from "next/navigation";
-import React, { SyntheticEvent, useState } from 'react'
-
+import React, { SyntheticEvent, useEffect, useState } from 'react'
 const SignUp = () => {
     const router = useRouter();
+    const { push } = useRouter();
 
     const [username, setUsername] = useState("");
     const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
+    const [password, setPassword] = useState('');
+    const [error, setError] = useState("");
+    const [isloading, setIsloading] = useState(false);
     const [alert, setAlert] = useState(false);
 
-    const handleRegister = async (e: SyntheticEvent) => {
-        e.preventDefault();
-        const response = await axios.post("/api/register",{
-            username: username,
-            email: email,
-            password: password,
-        });
+    console.log({ username, email, password });
 
-        if (response.status === 201 || response.status === 200) {
-            router.push("/login");
-        } else{
-            setAlert(true);
-        } 
-        
-        setUsername("");
-        setEmail("");
-        setPassword("");
+    const handleSubmit = async (e: SyntheticEvent) => {
+        e.preventDefault();
+        setError('');
+        setIsloading(true);
+        try {
+            const response = await axios.post('/api/register', {
+                username: username,
+                email: email,
+                password: password,
+            });
+
+            if (response.status === 201 || response.status === 200) {
+                router.push("/login");
+            } else {
+                setAlert(true);
+                setError('Gagal mendaftar. Silakan coba lagi.');
+            }
+        } catch (error) {
+            setError('Gagal mendaftar. Silakan coba lagi.');
+        } finally {
+            setIsloading(false);
+        }
+
+        setUsername('');
+        setEmail('');
+        setPassword('');
     }
-  return (
-    <div className="form-container sign-up-container">
-                <form className="form" action="#">
+
+    useEffect(() => {
+        if (username.length < 3 || username.length > 20) {
+            setError('Username harus memiliki panjang antara 3 dan 20 karakter.');
+        } else if (!/^[a-zA-Z0-9]+$/.test(username)) {
+            setError('Username hanya boleh berisi huruf dan angka.');
+        } else {
+            setError('');
+        }
+    
+        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+            setError('Email tidak valid.');
+        } else {
+            setError('');
+        }
+    
+        if (password.length < 8 || password.length > 20) {
+            setError('Password harus memiliki panjang antara 8 dan 20 karakter.');
+        } else {
+            setError('');
+        }
+    }, [username, email, password]);
+        return (
+            <div className="form-container sign-up-container">
+                <form className="form" onSubmit={(e) => handleSubmit(e)}>
                     <h1 className="form-title-singin">Create Account</h1>
-                    <input type="text" placeholder="Username" />
-                    <input type="email" placeholder="Email" />
-                    <input type="password" placeholder="Password" />
-                    <button type='button' className="form-button">Sign Up</button>
+                    <input type="Username" name='username' placeholder="Username" value={username} onChange={(e) => setUsername(e.target.value)} />
+                    <input type="email" name='email' placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} />
+                    <input type="password" name='password' placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} />
+                    <button type='submit' className="form-button"
+                    >Sign Up</button>
                 </form>
             </div>
-  )
-}
+        )
+    }
 
-export default SignUp
+    export default SignUp
