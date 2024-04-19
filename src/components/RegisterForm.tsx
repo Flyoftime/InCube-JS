@@ -51,31 +51,31 @@ const SignUp = () => {
         } else {
             setError('');
         }
-    
+
         if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
             setError('Email tidak valid.');
         } else {
             setError('');
         }
-    
+
         if (password.length < 8 || password.length > 20) {
             setError('Password harus memiliki panjang antara 8 dan 20 karakter.');
         } else {
             setError('');
         }
     }, [username, email, password]);
-        return (
-            <div className="form-container sign-up-container">
-                <form className="form" onSubmit={(e) => handleSubmit(e)}>
-                    <h1 className="form-title-singin">Create Account</h1>
-                    <input type="Username" name='username' placeholder="Username" value={username} onChange={(e) => setUsername(e.target.value)} />
-                    <input type="email" name='email' placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} />
-                    <input type="password" name='password' placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} />
-                    <button type='submit' className="form-button"
-                    >Sign Up</button>
-                </form>
-            </div>
-        )
-    }
+    return (
+        <div className="form-container sign-up-container">
+            <form className="form" onSubmit={handleSubmit}>
+                <h1 className="form-title-signin">Create Account</h1>
+                <input type="text" name='username' placeholder="Username" value={username} onChange={(e) => setUsername(e.target.value)} />
+                <input type="email" name='email' placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} />
+                <input type="password" name='password' placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} />
+                {error && <div className="error">{error}</div>}
+                <button type='submit' className="form-button" disabled={isloading}>Sign Up</button>
+            </form>
+        </div>
+    )
+}
 
-    export default SignUp
+export default SignUp

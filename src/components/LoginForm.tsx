@@ -16,7 +16,7 @@ const LoginForm = () => {
     const [password, setPassword] = useState('');
     const [alert, setAlert] = useState(false);
 
-    const handleLogin = async (e: any) => {
+    const handleLogin = async (e:SyntheticEvent ) => {
         e.preventDefault();
         try {
             const res = await signIn("credentials", {
