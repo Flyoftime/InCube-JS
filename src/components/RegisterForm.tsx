@@ -72,7 +72,8 @@ const SignUp = () => {
                 <input type="email" name='email' placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} />
                 <input type="password" name='password' placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} />
                 {error && <div className="error">{error}</div>}
-                <button type='submit' className="form-button" disabled={isloading}>Sign Up</button>
+                <button type='submit' className="form-button" disabled={!!error || isloading}>Sign Up</button>
+
             </form>
         </div>
     )

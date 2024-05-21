@@ -65,18 +65,18 @@ const Dashboard = () => {
     connectToMqttBroker()
   }
 
-  const publishNewMinTemp = () => {
-    const topic = "MirsabAnwar/newtemp"
-    const message = newMinTemp
+  // const publishNewMinTemp = () => {
+  //   const topic = "MirsabAnwar/newtemp"
+  //   const message = newMinTemp
 
-    if (client && isConnected && topic && message) {
-      client.publish(topic, message);
-    } else if(!client && !isConnected) {
-      return
-    } else if(!topic && !message) {
-      return
-    }
-  };
+  //   if (client && isConnected && topic && message) {
+  //     client.publish(topic, message);
+  //   } else if(!client && !isConnected) {
+  //     return
+  //   } else if(!topic && !message) {
+  //     return
+  //   }
+  // };
 
   // console.log("Temp : ", temp)
   // console.log("Humid : ",Humid)

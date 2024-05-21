@@ -50,21 +50,31 @@ export async function register(data: {
     }
 }
 
-export async function login (data: {email:string}) {
+export async function login(data: { email: string, password: string }) {
     const q = query(
         collection(firestore, "users"),
         where("email", "==", data.email),
     );
 
     const snapshot = await getDocs(q);
-    const user = snapshot.docs.map((doc) => ({
-        id: doc.id,
-        ...doc.data(),
-    }));
-    
-    if (user){
-        return user[0];
-    } else {
-        return null;
+    const userDocs = snapshot.docs;
+
+    if (userDocs.length > 0) {
+        const user = userDocs[0].data();
+
+        // Periksa apakah properti password tersedia
+        if (user.password) {
+            // Bandingkan hash dari kata sandi yang diberikan dengan hash yang tersimpan
+            const passwordMatch = await bcrypt.compare(data.password, user.password);
+            if (passwordMatch) {
+                // Jika cocok, kembalikan data pengguna
+                return {
+                    id: userDocs[0].id,
+                    ...user,
+                };
+            }
+        }
     }
+    // Jika tidak ditemukan atau kata sandi tidak cocok, kembalikan null
+    return null;
 }

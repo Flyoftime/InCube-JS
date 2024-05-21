@@ -7,7 +7,7 @@ interface Props {
 }
 
 class Overlay extends Component<Props> {
-    
+
     render() {
         const { handleClickSignUpButton, handleClickSignInButton } = this.props;
         // const[isLoading, setIsLoading] = useState(false);
@@ -40,11 +40,11 @@ class Overlay extends Component<Props> {
         return (
             <div className="overlay-container">
                 <div className="overlay">
-                <img src='/assets/logo2 2.png' alt="logo" width={180} className='p-4'/>
+                    <img src='/assets/logo2 2.png' alt="logo" width={180} className='p-4' />
                     <div className="overlay-panel overlay-left">
-                       <h1>Welcome Back!</h1>
+                        <h1>Welcome Back!</h1>
                         <p className="overlay-description">
-                            To keep connected with us,<br/>
+                            To keep connected with us,<br />
                             please login with your personal info.
                         </p>
                         <button
@@ -56,7 +56,7 @@ class Overlay extends Component<Props> {
                     <div className="overlay-panel overlay-right">
                         <h1>Hello, Friend!</h1>
                         <p className="overlay-description">
-                            Enter your personal details,<br/>
+                            Enter your personal details,<br />
                             and start journey with us.
                         </p>
                         <button

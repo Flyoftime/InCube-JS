@@ -14,11 +14,11 @@ const navbar = ({scrollTop}:{scrollTop:any}) => {
     <a href='/features' className='text text-white font-bold hover:underline transition-all duration-100'>Features</a>
     <a href='/about' className='text text-white font-bold hover:underline transition-all duration-100'>About</a>
     <a href='/login' className='text text-[#B21616] font-bold hover:underline transition-all duration-100' >Sign In</a>
-    <button  onClick={()=> signIn()} className='text text-[#B21616] font-bold hover:underline transition-all duration-100' >Sign In</button>
+    
     
   </div>
 </nav>
   )
 }
-
+ 1
 export default navbar

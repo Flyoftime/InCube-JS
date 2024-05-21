@@ -12,30 +12,35 @@ import { push } from 'firebase/database';
 
 const LoginForm = () => {
     const router = useRouter();
-    const [email, setEmail] = useState('');
+    const [email, setEmail] = useState("");
     const [password, setPassword] = useState('');
+    const [error, setError] = useState("");
+    const [isloading, setIsloading] = useState(false);
     const [alert, setAlert] = useState(false);
 
-    const handleLogin = async (e:SyntheticEvent ) => {
+    console.log({ email, password });
+    const handleLogin = async (e: SyntheticEvent) => {
         e.preventDefault();
+        setError('');
+        setIsloading(true);
         try {
-            const res = await signIn("credentials", {
-                email: e.target.email.value,
-                password: e.target.password.value,
-                redirect: false,
-                callbackUrl: "/dashboard"
-            })
-            if (!res?.error) {
-
+            const res = await axios.post('/api/login', {
+                email: email,
+                password: password,
+            });
+            if (res.status === 201 || res.status === 200) {
+                router.push('/dashboard');
             } else {
-                console.log(res.error);
+                setError('Gagal login. Silakan coba lagi.');
             }
-        } catch (err) {
-            console.log(err);
+        } catch (error) {
+            setError('Gagal login. Silakan coba lagi.');
+        } finally {
+            setIsloading(false);
         }
-
-    };
-
+        setEmail('');
+        setPassword('');
+    }
 
     return (
         <div className="form-container sign-in-container">
@@ -62,7 +67,9 @@ const LoginForm = () => {
                 }
                 <input type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} />
                 <input type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} />
-                <button type='submit' className="form-button">Sign In</button>
+                {error && <div className="error">{error}</div>}
+                <button type='submit' className="form-button" disabled={isloading}>Login</button>
+
                 <a className="find-password" href="#">Forget Password</a>
             </form>
         </div>
