@@ -4,7 +4,7 @@ import CredentialsProvider from "next-auth/providers/credentials";
 import { compare } from "bcrypt";
 import { login } from "@/lib/firebase/service";
 
-const authOptionts: NextAuthOptions = {
+export const authOptionts: NextAuthOptions = {
     session: {
         strategy: "jwt"
     },
@@ -23,45 +23,48 @@ const authOptionts: NextAuthOptions = {
                     email: string;
                     password: string;
                 };
-                const user: any = await login({email})
-                if (user){
+                const user: any = await login({ email, password });
+                if (user) {
                     const passwordConfirm = await compare(password, user.password);
-                    if(passwordConfirm){
+                    if (passwordConfirm) {
                         return user;
                     }
                     return null;
                 } else {
                     return null;
                 }
-                
+
             },
         }),
     ],
 
-    callbacks: {
-        async jwt({ token, account, profile, user }: any) {
-            if (account?.provider === 'credentials') {
-                token.email = user.email;
-                token.fullname = user.fullname;
 
+    callbacks: {
+        async jwt({ token, user }) {
+            if (user) {
+                return {
+                    ...token,
+                    email: user.email,
+                }
             }
-            return token;
+            return token
         },
-        async session ({session , token }: any ){
-            if ("email" in token) {
-                session.user.email = token.email;
+        async session({ session, user, token }) {
+            return {
+                ...session,
+                user: {
+                    ...session.user,
+                    id: token.id,
+                }
             }
-            if ("fullname" in token) {
-                session.user.fullname = token.fullname;
-            }
-            return session
         }
-    },
-    pages: {
+    }, pages: {
         signIn: "/login",
-    }
+    },
 };
 
+
 const handler = NextAuth(authOptionts);
-export { 
-    handler as GET, handler as POST };
+export {
+    handler as GET, handler as POST
+};

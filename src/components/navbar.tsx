@@ -20,5 +20,5 @@ const navbar = ({scrollTop}:{scrollTop:any}) => {
 </nav>
   )
 }
- 1
+
 export default navbar

@@ -1,46 +1,46 @@
-'use client'
-import { redirect } from 'next/dist/server/api-utils';
-import React, { Component } from 'react';
-import { signIn, useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import axios from 'axios';
-import Link from 'next/link';
 import { SyntheticEvent, useState } from "react";
-import { push } from 'firebase/database';
-
-
+import { signIn } from "next-auth/react";
 
 const LoginForm = () => {
     const router = useRouter();
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState('');
     const [error, setError] = useState("");
-    const [isloading, setIsloading] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
     const [alert, setAlert] = useState(false);
 
-    console.log({ email, password });
     const handleLogin = async (e: SyntheticEvent) => {
         e.preventDefault();
         setError('');
-        setIsloading(true);
+        setIsLoading(true);
         try {
+            const singInData = await signIn('credentials',{
+                email: email,
+                password: password,
+                redirect:false,
+            })
             const res = await axios.post('/api/login', {
                 email: email,
                 password: password,
             });
-            if (res.status === 201 || res.status === 200) {
+            if (res.status === 200 || res.status === 201) {
+                console.log('Login berhasil, mengarahkan ke dashboard');
                 router.push('/dashboard');
+            
             } else {
                 setError('Gagal login. Silakan coba lagi.');
+                setAlert(true);
             }
         } catch (error) {
             setError('Gagal login. Silakan coba lagi.');
+            setAlert(true);
         } finally {
-            setIsloading(false);
+            setIsLoading(false);
         }
-        setEmail('');
-        setPassword('');
-    }
+    };
+    
 
     return (
         <div className="form-container sign-in-container">
@@ -65,15 +65,26 @@ const LoginForm = () => {
                         <span className="text-white">Email atau password salah</span>
                     </div>
                 }
-                <input type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} />
-                <input type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} />
+                <input
+                    type="email"
+                    placeholder="Email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    autoComplete="email"
+                />
+                <input
+                    type="password"
+                    placeholder="Password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    autoComplete="current-password"
+                />
                 {error && <div className="error">{error}</div>}
-                <button type='submit' className="form-button" disabled={isloading}>Login</button>
-
+                <button type='submit' className="form-button" disabled={isLoading}>Login</button>
                 <a className="find-password" href="#">Forget Password</a>
             </form>
         </div>
     );
-}
+};
 
 export default LoginForm;
