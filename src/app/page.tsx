@@ -1,4 +1,4 @@
-'use client'
+"use client";
 import LoginForm from "@/components/LoginForm";
 import Footer from "@/components/footer";
 import Image from "next/image";
@@ -12,24 +12,23 @@ export default function Home() {
   const [scrollTop, setScrollTop] = useState(0);
 
   useEffect(() => {
-    const handleScroll = (event:any) => {
+    const handleScroll = (event: any) => {
       setScrollTop(window.scrollY);
     };
 
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener("scroll", handleScroll);
 
     return () => {
-      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener("scroll", handleScroll);
     };
   }, []);
   return (
     <main>
-      <Navbar scrollTop={scrollTop}/>  
-      <Landingpage/>
-      <Fitur/>
-      <AboutUs/>
-      <Footer/>
+      <Navbar scrollTop={scrollTop} />
+      <Landingpage />
+      <Fitur />
+      <AboutUs />
+      <Footer />
     </main>
-
   );
 }
