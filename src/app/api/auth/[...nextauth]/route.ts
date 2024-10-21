@@ -33,7 +33,6 @@ export const authOptionts: NextAuthOptions = {
                 } else {
                     return null;
                 }
-
             },
         }),
     ],

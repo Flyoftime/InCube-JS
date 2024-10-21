@@ -5,10 +5,10 @@ const Landingpage = () => {
     <div className='max-w-screen h-screen py-[150px] md:py-[250px] px-8 md:px-[154px] flex flex-col items-center gap-8' id='LandingPage'>
       <div className='flex flex-col gap-4 md:gap-8 w-full text-center md:text-left'>
         <p className='font-montserrat font-bold text-[36px] md:text-[70.44px] text-white'>
-          Reach the<br/>Efficiency<br/>of Farming
+          Reach the<br />Efficiency<br />of Farming
         </p>
         <p className='font-montserrat font-medium text-[18px] md:text-[33.94px] text-white'>
-          Order Our Smart Incubator 
+          Order Our Smart Incubator
         </p>
         <button className='bg-[#ffd4d4] rounded-[40px] font-montserrat text-[16px] md:text-[24px] text-[#3f2013] px-6 py-3 md:px-8 md:py-4 font-semibold w-fit'>
           Order Now

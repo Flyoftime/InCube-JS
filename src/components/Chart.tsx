@@ -111,7 +111,7 @@ function Chart() {
     };
 
     return (
-        <div className="h-full w-1/2">
+        <div className=" h-[442px]">
             <Line data={chartData} options={options} />
         </div>
     );

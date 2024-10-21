@@ -12,7 +12,7 @@ export default function Home() {
   const [scrollTop, setScrollTop] = useState(0);
 
   useEffect(() => {
-    const handleScroll = (event:any) => {
+    const handleScroll = (event: any) => {
       setScrollTop(window.scrollY);
     };
 
@@ -24,11 +24,11 @@ export default function Home() {
   }, []);
   return (
     <main>
-      <Navbar scrollTop={scrollTop}/>  
-      <Landingpage/>
-      <Fitur/>
-      <AboutUs/>
-      <Footer/>
+      <Navbar scrollTop={scrollTop} />
+      <Landingpage />
+      <Fitur />
+      <AboutUs />
+      <Footer />
     </main>
 
   );
