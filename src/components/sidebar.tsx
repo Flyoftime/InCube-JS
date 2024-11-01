@@ -25,7 +25,7 @@ const Sidebar = () => {
 
     return (
         <div className='flex'>
-            <div className='bg-[#FFB800] h-screen p-5 pt-8 w-52'>
+            <div className='bg-[#FFB800] h-screen p-5 pt-8 w-60'>
                 <div className="avatar object-center relative left-8">
                     <div className="w-24 rounded-full">
                         <img src="https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg" />
@@ -33,38 +33,38 @@ const Sidebar = () => {
                 </div>
                 <div className='grid gap-[30px] object-center top-20 left-5 relative'>
                     <div
-                        className={`flex justify-normal gap-1 rounded  hover:bg-white transition-color duration-200 ${pathname === ('/') ? 'bg-white text-black' : 'text-white'}`}
+                        className={`flex justify-normal gap-1 rounded  hover:bg-white hover:p-2 transition-all  transition-color duration-200 ${pathname === ('/') ? 'bg-white text-black' : 'text-white'}`}
 
                     >
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6 hover:bg-black">
                             <path strokeLinecap="round" strokeLinejoin="round" d="m2.25 12 8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25" />
                         </svg>
-                        <a href="/" className=''>Home</a>
+                        <a href="/" className='hover:text-black'>Home</a>
                     </div>
 
                     <div
-                        className={`flex justify-normal gap-1 rounded  hover:bg-white transition-color duration-200 ${pathname === ('/dashboard') ? 'bg-white text-black mr-2' : 'text-white'}`}
+                        className={`flex justify-normal gap-1 rounded  hover:bg-white hover:p-2 transition-all transition-color duration-200 ${pathname === ('/dashboard') ? 'bg-white text-black mr-2' : 'text-white'}`}
 
                     >
                         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
-                        <span className="material-symbols-outlined">
+                        <span className="material-symbols-outlined hover:bg-black">
                             dashboard
                         </span>
-                        <a href="/dashboard" className=''>Dashboard</a>
+                        <a href="/dashboard" className='hover:text-black'>Dashboard</a>
                     </div>
 
                     <div
-                        className={`flex justify-normal gap-1 rounded  hover:bg-white transition-color duration-200 ${pathname === '/reports' ? 'bg-white text-black mr-2' : 'text-white'}`}
+                        className={`flex justify-normal gap-1 rounded  hover:bg-white hover:p-2 transition-all transition-color duration-200 ${pathname === '/reports' ? 'bg-white text-black mr-2' : 'text-white'}`}
 
                     >
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
                             <path strokeLinecap="round" strokeLinejoin="round" d="M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 0 1 3 19.875v-6.75ZM9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 0 1-1.125-1.125V8.625ZM16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 0 1-1.125-1.125V4.125Z" />
                         </svg>
-                        <a href="/reports" className=''>Reports</a>
+                        <a href="/reports" className='hover:text-black'>Reports</a>
                     </div>
 
                     <div
-                        className={`flex justify-normal gap-1 rounded  hover:bg-white transition-color duration-200 ${pathname === '/settings' ? 'bg-white text-black mr-2' : 'text-white'}`}
+                        className={`flex justify-normal gap-1 rounded  hover:bg-white hover:p-2 transition-all transition-color duration-200 ${pathname === '/settings' ? 'bg-white text-black mr-2' : 'text-white'}`}
 
                     >
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
@@ -75,7 +75,7 @@ const Sidebar = () => {
                     </div>
 
                     <div
-                        className={`flex justify-normal gap-1 rounded  hover:bg-white transition-color duration-200 ${pathname === '/logout' ? 'bg-white text-black mr-2' : 'text-white'}`}
+                        className={`flex justify-normal gap-1 rounded  hover:bg-white hover:p-2 transition-all transition-color duration-200 ${pathname === '/logout' ? 'bg-white text-black mr-2' : 'text-white'}`}
                         onClick={() => {
                             signOut({
                                 redirect: true,

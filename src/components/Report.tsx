@@ -1,7 +1,7 @@
 'use client'
 import React, { useState, useEffect } from 'react'
-import Chart from './Chart';
 import Paho from 'paho-mqtt'
+import ChartWeekly from './ChartWeekly';
 
 type ClientType = {
     subscribe: (topic: string) => void;
@@ -9,8 +9,20 @@ type ClientType = {
 }
 
 const Reports = () => {
-    const [temp, setTemp] = useState<string | null>(null);
-    const [humid, setHumid] = useState<string | null>(null);
+    const [temp, setTemp] = useState<number | null>(null);
+    const [humid, setHumid] = useState<number | null>(null);
+    const [tempData, setTempData] = useState<number[]>(() => {
+        // Mengambil data dari localStorage jika ada
+        const savedData = localStorage.getItem('tempData');
+        return savedData ? JSON.parse(savedData) : [];
+    });
+    const [humidData, setHumidData] = useState<number[]>(() => {
+        // Mengambil data dari localStorage jika ada
+        const savedData = localStorage.getItem('humidData');
+        return savedData ? JSON.parse(savedData) : [];
+    });
+    const [weeklyTempAvg, setWeeklyTempAvg] = useState<number | null>(null);
+    const [weeklyHumidAvg, setWeeklyHumidAvg] = useState<number | null>(null);
     const [client, setClient] = useState<ClientType | null>(null);
     const [isConnected, setIsConnected] = useState(false);
     const [openAll, setOpenAll] = useState(false);
@@ -22,7 +34,7 @@ const Reports = () => {
 
         const mqttClient: any = new Paho.Client(host, Number(port), clientID);
 
-        mqttClient.onMessageArrived = messageArrived
+        mqttClient.onMessageArrived = messageArrived;
 
         mqttClient.onConnectionLost = (responseObject: any) => {
             if (responseObject.errorCode !== 0) {
@@ -42,16 +54,25 @@ const Reports = () => {
     };
 
     const messageArrived = (message: any) => {
-        const payload = message.payloadString;
+        const payload = parseFloat(message.payloadString);
         const topic = message.destinationName;
 
         if (topic === 'MirsabAnwar/Temp') {
             setTemp(payload);
+            setTempData((prevData) => {
+                const newData = [...prevData, payload].slice(-7); // Menyimpan data harian untuk 7 hari
+                localStorage.setItem('tempData', JSON.stringify(newData)); // Simpan di localStorage
+                return newData;
+            });
         } else if (topic === 'MirsabAnwar/Humid') {
             setHumid(payload);
+            setHumidData((prevData) => {
+                const newData = [...prevData, payload].slice(-7);
+                localStorage.setItem('humidData', JSON.stringify(newData)); // Simpan di localStorage
+                return newData;
+            });
         }
     };
-
 
     const subscribeToTopic = (topic: string) => {
         if (client && isConnected && topic) {
@@ -59,20 +80,30 @@ const Reports = () => {
         }
     };
 
-
     useEffect(() => {
         if (!isConnected) {
             connectToMqttBroker();
         }
     }, [isConnected]);
 
-    // Berlangganan ke topik setelah client terhubung
     useEffect(() => {
         if (client && isConnected) {
             subscribeToTopic('MirsabAnwar/Temp');
             subscribeToTopic('MirsabAnwar/Humid');
         }
     }, [client, isConnected]);
+
+    // Menghitung rata-rata mingguan setiap kali data diperbarui
+    useEffect(() => {
+        if (tempData.length === 7) {
+            const tempAvg = tempData.reduce((acc, curr) => acc + curr, 0) / tempData.length;
+            setWeeklyTempAvg(tempAvg);
+        }
+        if (humidData.length === 7) {
+            const humidAvg = humidData.reduce((acc, curr) => acc + curr, 0) / humidData.length;
+            setWeeklyHumidAvg(humidAvg);
+        }
+    }, [tempData, humidData]);
 
     return (
         <div className='p-12 flex flex-col md:flex-row gap-[50px] items-start'>
@@ -97,10 +128,10 @@ const Reports = () => {
                 </div>
 
                 {openAll && (
-                    <div className='mt-4 flex flex-row gap-2 items-start'>
+                    <div className='mt-4 flex flex-row gap-16 items-start'>
                         {/* Menambahkan flex-grow untuk Chart agar lebih besar */}
                         <div className='w-[60%]'>
-                            <Chart />
+                            <ChartWeekly />
                         </div>
 
                         <div className='flex flex-col items-start'>
@@ -108,19 +139,49 @@ const Reports = () => {
                                 Average
                             </span>
                             <div className='flex flex-col md:flex-row'>
-                            <div className='card w-[170px] h-[110px] drop-shadow-xl p-2 ms-2 rounded-lg mt-4 '>
-                                <div className='h-1/3 bg-[#FFCC3F] rounded-t-lg font-montserrat p-2'>
-                                    Temperature
+                                <div className='card w-[170px] h-[110px] drop-shadow-xl p-2 ms-2 rounded-lg mt-4 '>
+                                    <div className='h-1/3 bg-[#FFCC3F] rounded-t-lg font-montserrat p-2'>
+                                        Temperature
+                                    </div>
+                                    <div className='h-1/2 bg-white rounded-b-lg text-black text-center font-bold'>
+                                        {weeklyTempAvg !== null ? weeklyTempAvg.toFixed(2) : 'N/A'}
+                                    </div>
                                 </div>
-                                <div className='h-1/2 bg-white rounded-b-lg text-black text-center font-bold'>{temp}</div>
-                            </div>
 
-                            <div className='card w-[170px] h-[110px] drop-shadow-xl p-2 ms-2 rounded-lg mt-4 '>
-                                <div className='h-1/3 bg-[#FFCC3F] rounded-t-lg font-montserrat p-2'>
-                                    Temperature
+                                <div className='card w-[170px] h-[110px] drop-shadow-xl p-2 ms-2 rounded-lg mt-4 '>
+                                    <div className='h-1/3 bg-[#1AB44F] rounded-t-lg font-montserrat p-2'>
+                                        Humidity
+                                    </div>
+                                    <div className='h-1/2 bg-white rounded-b-lg text-black text-center font-bold'>
+                                        {weeklyHumidAvg !== null ? weeklyHumidAvg.toFixed(2) : 'N/A'}
+                                    </div>
                                 </div>
-                                <div className='h-1/2 bg-white rounded-b-lg text-black text-center font-bold'>{humid}</div>
+
                             </div>
+                            <div className='flex flex-col items-start'>
+                                <span className='text-black font-bold text-[32px]'>
+                                    Eggs
+                                </span>
+                                <div className='flex flex-col md:flex-row'>
+                                    <div className='card w-[170px] h-[110px] drop-shadow-xl p-2 ms-2 rounded-lg mt-4 '>
+                                        <div className='h-1/3 bg-[#6184FF] rounded-t-lg font-montserrat p-2'>
+                                            Active
+                                        </div>
+                                        <div className='h-1/2 bg-white rounded-b-lg text-black text-center font-bold'>
+                                            0
+                                        </div>
+                                    </div>
+
+                                    <div className='card w-[170px] h-[110px] drop-shadow-xl p-2 ms-2 rounded-lg mt-4 '>
+                                        <div className='h-1/3 bg-[#FF79A1] rounded-t-lg font-montserrat p-2'>
+                                            Hatched
+                                        </div>
+                                        <div className='h-1/2 bg-white rounded-b-lg text-black text-center font-bold'>
+                                            0
+                                        </div>
+                                    </div>
+
+                                </div>
                             </div>
                         </div>
                     </div>
