@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from 'react'
 import Paho from 'paho-mqtt'
 import ChartWeekly from './ChartWeekly';
+import Chart from './Chart';
 
 type ClientType = {
     subscribe: (topic: string) => void;
@@ -12,12 +13,12 @@ const Reports = () => {
     const [temp, setTemp] = useState<number | null>(null);
     const [humid, setHumid] = useState<number | null>(null);
     const [tempData, setTempData] = useState<number[]>(() => {
-        // Mengambil data dari localStorage jika ada
+
         const savedData = localStorage.getItem('tempData');
         return savedData ? JSON.parse(savedData) : [];
     });
     const [humidData, setHumidData] = useState<number[]>(() => {
-        // Mengambil data dari localStorage jika ada
+
         const savedData = localStorage.getItem('humidData');
         return savedData ? JSON.parse(savedData) : [];
     });
@@ -131,7 +132,7 @@ const Reports = () => {
                     <div className='mt-4 flex flex-row gap-16 items-start'>
                         {/* Menambahkan flex-grow untuk Chart agar lebih besar */}
                         <div className='w-[60%]'>
-                            <ChartWeekly />
+                            <Chart/>
                         </div>
 
                         <div className='flex flex-col items-start'>

@@ -33,24 +33,24 @@ const Sidebar = () => {
                 </div>
                 <div className='grid gap-[30px] object-center top-20 left-5 relative'>
                     <div
-                        className={`flex justify-normal gap-1 rounded  hover:bg-white hover:p-2 transition-all  transition-color duration-200 ${pathname === ('/') ? 'bg-white text-black' : 'text-white'}`}
+                        className={`flex justify-normal gap-1 rounded  hover:bg-white hover:p-2 transition-all  transition-color group/text duration-200 ${pathname === ('/') ? 'bg-white group-hover/text:text-black' : 'text-white'}`}
 
                     >
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6 hover:bg-black">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6 group-hover/text:stroke-black">
                             <path strokeLinecap="round" strokeLinejoin="round" d="m2.25 12 8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25" />
                         </svg>
-                        <a href="/" className='hover:text-black'>Home</a>
+                        <a href="/" className='group-hover/text:text-black'>Home</a>
                     </div>
 
                     <div
-                        className={`flex justify-normal gap-1 rounded  hover:bg-white hover:p-2 transition-all transition-color duration-200 ${pathname === ('/dashboard') ? 'bg-white text-black mr-2' : 'text-white'}`}
+                        className={`flex justify-normal gap-1 rounded  hover:bg-white hover:p-2 transition-all transition-color group/text duration-200 ${pathname === ('/dashboard') ? 'bg-white group-hover/text:text-black mr-2' : 'text-white'}`}
 
                     >
                         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
-                        <span className="material-symbols-outlined hover:bg-black">
+                        <span className="material-symbols-outlined group-hover/text:bg-black">
                             dashboard
                         </span>
-                        <a href="/dashboard" className='hover:text-black'>Dashboard</a>
+                        <a href="/dashboard" className='group-hover/text:text-black'>Dashboard</a>
                     </div>
 
                     <div

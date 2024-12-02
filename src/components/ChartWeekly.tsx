@@ -132,7 +132,7 @@ function ChartWeekly() {
 
     return (
         <div className="h-[442px]">
-            <Line data={chartData} options={options} />
+            <Line data={chartData} options={options as any} />
             {/* <div className="mt-8">
                 <h2>Daily Average Data</h2>
                 <p>Temperature (°C): {dailyTemperatureData.join(', ')}</p>
