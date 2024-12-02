@@ -1,4 +1,4 @@
-:root{
+:root {
   background-color: #fff;
 }
 
@@ -64,6 +64,7 @@ h1 {
   height: 100%;
   text-align: center;
 }
+
 .form-signin {
   background-color: #ffffff;
   display: flex;
@@ -77,11 +78,12 @@ h1 {
 
 .form-title {
   margin-bottom: 30px;
-  color:#000;
+  color: #000;
 }
+
 .form-title-singin {
   margin-bottom: 30px;
-  color:#FFB800;
+  color: #FFB800;
   font-size: 30px;
 }
 
@@ -159,14 +161,14 @@ input {
 @keyframes show {
   0%,
   49.99% {
-      opacity: 0;
-      z-index: 1;
+    opacity: 0;
+    z-index: 1;
   }
 
   50%,
   100% {
-      opacity: 1;
-      z-index: 5;
+    opacity: 1;
+    z-index: 5;
   }
 }
 
@@ -237,4 +239,22 @@ input {
 
 .container.right-panel-active .overlay-right {
   transform: translateX(20%);
+}
+
+/* Media Queries */
+@media (max-width: 768px) {
+  .container {
+    flex-direction: column;
+    width: 90%;
+    margin-top: 50px;
+  }
+
+  .sign-in-container,
+  .sign-up-container {
+    width: 100%;
+  }
+
+  .overlay-container {
+    display: none;
+  }
 }

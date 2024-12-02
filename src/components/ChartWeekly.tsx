@@ -27,6 +27,9 @@ function ChartWeekly() {
         let dayTemperatureSum = 0;
         let dayHumiditySum = 0;
         let dayCount = 0;
+        let weeklyTemperatureSum = 0;
+        let weeklyHumiditySum = 0;
+        let weekCount = 0;
 
         const unsubscribeTemp = onValue(tempRef, (snapshot) => {
             const newTemperature = snapshot.val();
@@ -47,11 +50,14 @@ function ChartWeekly() {
             }
 
             // Update weekly data
-            if (temperatureValues.length >= 7) {
-                const weeklyAvgTemp = temperatureValues.reduce((sum, value) => sum + value, 0) / temperatureValues.length;
+            weeklyTemperatureSum += newTemperature;
+            if (temperatureValues.length >= 7 * 24) { // 7 days of 24 readings
+                const weeklyAvgTemp = weeklyTemperatureSum / (7 * 24);
                 setWeeklyTemperatureData((prev) => [...prev, weeklyAvgTemp]);
-                setWeekLabels((prev) => [...prev, `Week of ${formattedDate}`]);
+                setWeekLabels((prev) => [...prev, `Week ${weekCount + 1}`]);
+                weeklyTemperatureSum = 0;
                 temperatureValues = [];
+                weekCount++;
             }
         });
 
@@ -60,16 +66,20 @@ function ChartWeekly() {
             humidityValues.push(newHumidity);
             dayHumiditySum += newHumidity;
 
+            // Update daily humidity data
             if (dayCount === 24) { // assuming 24 readings per day for hourly data
                 const dailyAvgHumidity = dayHumiditySum / dayCount;
                 setDailyHumidityData((prev) => [...prev, dailyAvgHumidity]);
                 dayHumiditySum = 0;
             }
 
-            if (humidityValues.length >= 7) {
-                const weeklyAvgHumidity = humidityValues.reduce((sum, value) => sum + value, 0) / humidityValues.length;
+            // Update weekly humidity data
+            weeklyHumiditySum += newHumidity;
+            if (humidityValues.length >= 7 * 24) { // 7 days of 24 readings
+                const weeklyAvgHumidity = weeklyHumiditySum / (7 * 24);
                 setWeeklyHumidityData((prev) => [...prev, weeklyAvgHumidity]);
                 humidityValues = [];
+                weeklyHumiditySum = 0;
             }
         });
 
@@ -133,11 +143,6 @@ function ChartWeekly() {
     return (
         <div className="h-[442px]">
             <Line data={chartData} options={options as any} />
-            {/* <div className="mt-8">
-                <h2>Daily Average Data</h2>
-                <p>Temperature (°C): {dailyTemperatureData.join(', ')}</p>
-                <p>Humidity (%): {dailyHumidityData.join(', ')}</p>
-            </div> */}
         </div>
     );
 }
