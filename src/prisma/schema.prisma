@@ -1,0 +1,121 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model data_produk {
+  id        Int               @id @default(autoincrement())
+  id_produk String            @db.VarChar(255)
+  suhu      Float             @default(0) @db.Float
+  humid     Float             @default(0) @db.Float
+  gas       Float             @default(0) @db.Float
+  lampu     data_produk_lampu @default(OFF)
+  fan       data_produk_fan   @default(OFF)
+  ts        DateTime          @db.DateTime(0)
+  produk    produk            @relation(fields: [id_produk], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "FK_data_produk_produk")
+
+  @@index([id_produk], map: "id_produk")
+}
+
+model produk {
+  id           String         @id @db.VarChar(50)
+  nama         String?        @db.VarChar(50)
+  tinggi       Int?
+  lebar        Int?
+  kapasitas    Int?
+  telur        Int?
+  pass_access  String?        @db.VarChar(50)
+  price        Float?
+  created_at   DateTime?      @db.Timestamp(0)
+  data_produk  data_produk[]
+  transactions transactions[]
+  user_subs    user_subs[]
+}
+
+model address {
+  id             Int     @id @default(autoincrement())
+  id_user        Int     @default(0)
+  Kecamatan      String  @default("0") @db.VarChar(50)
+  provinsi       String? @db.VarChar(50)
+  Kabupaten      String? @db.VarChar(50)
+  Kelurahan      String? @db.VarChar(50)
+  Kode_pos       String? @db.VarChar(50)
+  alamat_lengkap String? @db.VarChar(50)
+  users          users   @relation(fields: [id_user], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "FK_address_users")
+
+  @@index([id_user], map: "id_user")
+}
+
+model detail_user {
+  id         Int                 @id @default(autoincrement())
+  id_user    Int?                @default(0)
+  name       String?             @db.VarChar(50)
+  age        String?             @db.VarChar(50)
+  gender     detail_user_gender?
+  contact    String?             @db.VarChar(50)
+  job        String?             @db.VarChar(50)
+  created_at DateTime?           @db.Timestamp(0)
+  users      users?              @relation(fields: [id_user], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "FK__users")
+
+  @@index([id_user], map: "id_user")
+}
+
+model users {
+  id           Int            @id @default(autoincrement())
+  username     String         @db.VarChar(50)
+  email        String         @unique(map: "email") @db.VarChar(50)
+  password     String         @db.VarChar(100)
+  created_at   DateTime       @db.Timestamp(0)
+  address      address[]
+  detail_user  detail_user[]
+  transactions transactions[]
+  user_subs    user_subs[]
+}
+
+model transactions {
+  id               Int       @id @default(autoincrement())
+  id_cus           Int?
+  id_product       String?   @db.VarChar(50)
+  amount           Float?
+  transaction_code Int?
+  status           String?   @db.VarChar(50)
+  created_at       DateTime? @db.Timestamp(0)
+  users            users?    @relation(fields: [id_cus], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "FK_subsciption_users")
+  produk           produk?   @relation(fields: [id_product], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "FK_transactions_produk")
+
+  @@index([id_cus], map: "id_cus")
+  @@index([id_product], map: "id_product")
+}
+
+model user_subs {
+  id         Int       @id @default(autoincrement())
+  id_cus     Int?      @default(0)
+  id_produk  String?   @db.VarChar(50)
+  start_sub  DateTime? @db.Date
+  end_sub    DateTime? @db.Date
+  created_at DateTime? @db.Timestamp(0)
+  produk     produk?   @relation(fields: [id_produk], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "FK__produk")
+  users      users?    @relation(fields: [id_cus], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "FK_user_produk_users")
+
+  @@index([id_cus], map: "id_cus")
+  @@index([id_produk], map: "id_produk")
+}
+
+enum data_produk_lampu {
+  ON
+  OFF
+}
+
+enum data_produk_fan {
+  ON
+  OFF
+}
+
+enum detail_user_gender {
+  Male
+  Female
+}

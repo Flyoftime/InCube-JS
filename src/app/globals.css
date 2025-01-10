@@ -2,8 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
-
-:root{
+:root {
   background-color: #fff;
 }
 
@@ -37,27 +36,47 @@ body {
   }
 }
 
-
 #LandingPage {
-  background-image: url('../../public/assets/Group\ 26953.png');
+  background-image: url("../../public/assets/Group\ 26953.png");
   background-position: top;
   background-repeat: no-repeat;
   background-size: cover;
 }
 
-#About  {
-  background-image: url('../../public/assets/bgabout.png');
-
+#About {
+  background-image: url("../../public/assets/bgabout.png");
 }
 
 .font-montserrat {
-  font-family: 'Monserrat', sans-serif;
+  font-family: "Monserrat", sans-serif;
 }
 
 #settings {
-  background-image: url('../../public/assets/bgabout.png');
-  
+  background-image: url("../../public/assets/bgabout.png");
+
   height: 100vh;
   width: 100vw;
   background-color: #fffbfa;
+}
+
+input[type="date"]::-webkit-calendar-picker-indicator {
+  color: black; /* Ubah warna ikon */
+  filter: invert(1); /* Untuk memastikan warna berubah menjadi hitam */
+  opacity: 1; /* Pastikan ikon terlihat */
+}
+
+.custom-swal {
+  font-family: "Arial", sans-serif; /* Ubah font secara keseluruhan */
+}
+
+.custom-swal-title {
+  font-family: "Roboto", sans-serif; /* Font untuk judul */
+  font-size: 20px; /* Ukuran font untuk judul */
+  font-weight: bold; /* Tebal font */
+}
+
+.custom-swal-icon {
+  font-size: 8px; /* Font pada icon */
+  height: 50px;
+  width: 50px;
 }

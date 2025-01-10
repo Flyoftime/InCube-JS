@@ -1,17 +1,46 @@
 import { NextRequest, NextResponse } from "next/server";
-import { register } from "@/lib/firebase/service"
+import { register } from "@/lib/prisma-service/authService";
 
-export const POST = async(req: Request) => {
+export const POST = async (req: Request) => {
+  try {
     const body = await req.json();
 
-    if (!body.username){
-        return NextResponse.json({status: 500, message: "username tidak boleh kosong"})
-    }else if (!body.email){
-        return NextResponse.json({status: 500, message: "email tidak boleh kosong"})
-    }else if(!body.password){
-        return NextResponse.json({status: 500, message: "password tidak boleh kosong"})
-    }else {
-        const res = await register(body)
-        return NextResponse.json({status: res.status, message: res.message})
+    // Validasi input
+    if (!body.username) {
+      return NextResponse.json({
+        status: 500,
+        message: "Username tidak boleh kosong",
+      });
     }
-}
+
+    if (!body.email) {
+      return NextResponse.json({
+        status: 500,
+        message: "Email tidak boleh kosong",
+      });
+    }
+
+    if (!body.password) {
+      return NextResponse.json({
+        status: 500,
+        message: "Password tidak boleh kosong",
+      });
+    }
+
+    // Register user
+    const res = await register(body);
+
+    // Response sukses
+    return NextResponse.json({
+      status: 201,
+      message: "User berhasil didaftarkan",
+      data: res,
+    });
+  } catch (error) {
+    // Response error internal
+    return NextResponse.json({
+      status: 500,
+      message: "Terjadi kesalahan saat mendaftarkan pengguna",
+    });
+  }
+};

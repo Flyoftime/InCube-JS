@@ -1,24 +1,48 @@
 import { NextResponse } from "next/server";
-import bcrypt from 'bcrypt'
-import { login } from "@/lib/firebase/service";
+import { PrismaClient } from "@prisma/client";
+import bcrypt from "bcrypt";
+
+const prisma = new PrismaClient();
 
 export const POST = async (request: Request) => {
-    try {
-        const body = await request.json();
+  try {
+    const body = await request.json();
 
-        // Ambil data pengguna dari Firebase berdasarkan alamat email
-        const user = await login({ email: body.email, password: body.password });
+    const { email, password } = body;
 
-        // Jika pengguna tidak ditemukan, kirim respons dengan status 401
-        if (!user) {
-            return NextResponse.json({ message: "Email atau kata sandi salah." }, { status: 401 });
-        }
+    // Cari pengguna berdasarkan email
+    const user = await prisma.users.findUnique({
+      where: { email },
+    });
 
-        // Jika email dan kata sandi cocok, kirim respons dengan status 200
-        return NextResponse.json({ message: "Login berhasil." }, { status: 200 });
-    } catch (error) {
-        console.error("Error during login:", error);
-        // Tangani kesalahan dan kirim respons dengan status 500
-        return NextResponse.json({ message: "Terjadi kesalahan saat proses login." }, { status: 500 });
+    // Jika pengguna tidak ditemukan
+    if (!user) {
+      return NextResponse.json(
+        { message: "Email tidak ditemukan." },
+        { status: 401 }
+      );
     }
-}
+
+    // Verifikasi password
+    const passwordMatch = await bcrypt.compare(password, user.password);
+    if (!passwordMatch) {
+      return NextResponse.json(
+        { message: "Kata sandi salah." },
+        { status: 401 }
+      );
+    }
+
+    // Login berhasil
+    const { password: _, ...userWithoutPassword } = user;
+    return NextResponse.json(
+      { message: "Login berhasil.", user: userWithoutPassword },
+      { status: 200 }
+    );
+  } catch (error) {
+    console.error("Error during login:", error);
+    return NextResponse.json(
+      { message: "Terjadi kesalahan saat proses login." },
+      { status: 500 }
+    );
+  }
+};
