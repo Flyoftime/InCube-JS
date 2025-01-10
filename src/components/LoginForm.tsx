@@ -2,6 +2,7 @@ import { useRouter } from "next/navigation";
 import axios from "axios";
 import { SyntheticEvent, useState } from "react";
 import { signIn } from "next-auth/react";
+import Swal from "sweetalert2";
 
 const LoginForm = () => {
   const router = useRouter();
@@ -26,15 +27,51 @@ const LoginForm = () => {
         password: password,
       });
       if (res.status === 200 || res.status === 201) {
+        const userId = res.data.user.id;
+        // console.log("ini di singin ", userId);
+
+        localStorage.setItem("id", userId);
         console.log("Login berhasil, mengarahkan ke dashboard");
+        Swal.fire({
+          position: "top",
+          icon: "success",
+          title: "Login Berhasil",
+          showConfirmButton: false,
+          timer: 1500,
+          customClass: {
+            popup: "custom-swal",
+            title: "custom-swal-title",
+            icon: "custom-swal-icon",
+          },
+        });
         router.push("/dashboard");
       } else {
-        setError("Gagal login. Silakan coba lagi.");
-        setAlert(true);
+        Swal.fire({
+          position: "top",
+          icon: "error",
+          title: "Gagal login. Silakan coba lagi.",
+          showConfirmButton: false,
+          timer: 1500,
+          customClass: {
+            popup: "custom-swal",
+            title: "custom-swal-title",
+            icon: "custom-swal-icon",
+          },
+        });
       }
     } catch (error) {
-      setError("Gagal login. Silakan coba lagi.");
-      setAlert(true);
+      Swal.fire({
+        position: "top",
+        icon: "error",
+        title: "Gagal login. Silakan coba lagi.",
+        showConfirmButton: false,
+        timer: 1500,
+        customClass: {
+          popup: "custom-swal",
+          title: "custom-swal-title",
+          icon: "custom-swal-icon",
+        },
+      });
     } finally {
       setIsLoading(false);
     }
