@@ -86,8 +86,8 @@ const Settings = () => {
             <p className="text-base text-black font-bold font-montserrat pt-2">
               Incube Active
             </p>
-            <p className="lg:text-xl text-lg font-bold text-gray-900">
-              {activeIncu}
+            <p className="lg:text-2xl text-lg font-bold text-gray-900 pt-[37px] flex justify-center items-center">
+              29 Days Left
             </p>
           </div>
         </div>

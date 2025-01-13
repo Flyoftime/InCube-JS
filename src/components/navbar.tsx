@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import { signIn } from 'next-auth/react';
+import { useState } from "react";
+import { signIn } from "next-auth/react";
 
 const Navbar = ({ scrollTop }: { scrollTop: any }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -7,7 +7,7 @@ const Navbar = ({ scrollTop }: { scrollTop: any }) => {
   return (
     <nav
       className={`navbar ${
-        scrollTop < 50 ? 'bg-transparent' : 'bg-[#ffb800]'
+        scrollTop < 50 ? "bg-transparent" : "bg-[#ffb800]"
       } max-w-screen w-full flex fixed top-0 left-0 right-0 z-50 justify-between items-center px-6 md:px-12 py-2 transition-colors duration-500`}
     >
       {/* Logo */}

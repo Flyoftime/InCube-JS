@@ -18,7 +18,7 @@ export const POST = async (request: Request) => {
     // Jika pengguna tidak ditemukan
     if (!user) {
       return NextResponse.json(
-        { message: "Email tidak ditemukan." },
+        { success: false, message: "Email tidak ditemukan." },
         { status: 401 }
       );
     }
@@ -27,7 +27,7 @@ export const POST = async (request: Request) => {
     const passwordMatch = await bcrypt.compare(password, user.password);
     if (!passwordMatch) {
       return NextResponse.json(
-        { message: "Kata sandi salah." },
+        { success: false, message: "Kata sandi salah." },
         { status: 401 }
       );
     }
@@ -35,13 +35,13 @@ export const POST = async (request: Request) => {
     // Login berhasil
     const { password: _, ...userWithoutPassword } = user;
     return NextResponse.json(
-      { message: "Login berhasil.", user: userWithoutPassword },
-      { status: 200 }
+      { success: true, message: "Login berhasil.", user: userWithoutPassword },
+      { status: 201 }
     );
   } catch (error) {
     console.error("Error during login:", error);
     return NextResponse.json(
-      { message: "Terjadi kesalahan saat proses login." },
+      { success: false, message: "Terjadi kesalahan saat proses login." },
       { status: 500 }
     );
   }

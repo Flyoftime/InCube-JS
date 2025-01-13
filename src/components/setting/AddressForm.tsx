@@ -42,7 +42,7 @@ const AddressForm: React.FC = () => {
           throw new Error("Failed to fetch Address data");
         }
         const data = await response.json();
-        setAddressData(data.data.data); // pastikan data berada dalam field 'data'
+        setAddressData(data.data); // pastikan data berada dalam field 'data'
       } catch (error) {
         console.error("Error fetching Address data:", error);
       } finally {

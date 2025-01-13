@@ -1,4 +1,4 @@
-'use client'
+"use client";
 import LoginForm from "@/components/LoginForm";
 import Footer from "@/components/footer";
 import Image from "next/image";
@@ -16,10 +16,10 @@ export default function Home() {
       setScrollTop(window.scrollY);
     };
 
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener("scroll", handleScroll);
 
     return () => {
-      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener("scroll", handleScroll);
     };
   }, []);
   return (
@@ -30,6 +30,5 @@ export default function Home() {
       <AboutUs />
       <Footer />
     </main>
-
   );
 }

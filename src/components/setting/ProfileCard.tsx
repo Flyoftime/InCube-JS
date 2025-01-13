@@ -43,7 +43,7 @@ const ProfileCard: React.FC<any> = () => {
         const data = await response.json();
         console.log(data);
 
-        setProfileData(data.data.data); // pastikan data berada dalam field 'data'
+        setProfileData(data.data); // pastikan data berada dalam field 'data'
       } catch (error) {
         console.error("Error fetching profile data:", error);
       } finally {
