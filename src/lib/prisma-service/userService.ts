@@ -21,10 +21,9 @@ export const createDetailUser = async (data: {
         created_at: new Date(),
       },
     });
-    return { success: true, data: newDetailUser };
+    return newDetailUser;
   } catch (error) {
     console.error("Error creating detail_user:", error);
-    return { success: false, error: "Failed to create detail_user" };
   }
 };
 
@@ -36,10 +35,9 @@ export const getAllDetailUsers = async () => {
         users: true, // Include related user data
       },
     });
-    return { success: true, data: detailUsers };
+    return detailUsers;
   } catch (error) {
     console.error("Error fetching detail_users:", error);
-    return { success: false, error: "Failed to fetch detail_users" };
   }
 };
 
@@ -53,12 +51,11 @@ export const getDetailUserById = async (id: number) => {
       },
     });
     if (!detailUser) {
-      return { success: false, error: "Detail user not found" };
+      console.error("Detail user not found");
     }
-    return { success: true, data: detailUser };
+    return detailUser;
   } catch (error) {
     console.error("Error fetching detail_user:", error);
-    return { success: false, error: "Failed to fetch detail_user" };
   }
 };
 
@@ -74,14 +71,8 @@ export const updateDetailUser = async (
   }
 ) => {
   try {
-    const detailUser = await prisma.detail_user.findFirst({
-      where: { id_user: id },
-      include: {
-        users: true, // Include related user data
-      },
-    });
     const updatedDetailUser = await prisma.detail_user.update({
-      where: { id: detailUser?.id },
+      where: { id },
       data: {
         name: data.name,
         age: data.age,
@@ -90,22 +81,20 @@ export const updateDetailUser = async (
         job: data.job,
       },
     });
-    return { success: true, data: updatedDetailUser };
+    return updatedDetailUser;
   } catch (error) {
     console.error("Error updating detail_user:", error);
-    return { success: false, error: "Failed to update detail_user" };
   }
 };
 
 // Delete a detail_user by ID
 export const deleteDetailUser = async (id: number) => {
   try {
-    await prisma.detail_user.delete({
+    const deleteUser = await prisma.detail_user.delete({
       where: { id },
     });
-    return { success: true, message: "Detail user deleted successfully" };
+    return deleteUser;
   } catch (error) {
     console.error("Error deleting detail_user:", error);
-    return { success: false, error: "Failed to delete detail_user" };
   }
 };

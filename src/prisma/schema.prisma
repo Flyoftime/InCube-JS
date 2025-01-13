@@ -30,6 +30,7 @@ model produk {
   telur        Int?
   pass_access  String?        @db.VarChar(50)
   price        Float?
+  active       produk_active?
   created_at   DateTime?      @db.Timestamp(0)
   data_produk  data_produk[]
   transactions transactions[]
@@ -98,8 +99,8 @@ model user_subs {
   start_sub  DateTime? @db.Date
   end_sub    DateTime? @db.Date
   created_at DateTime? @db.Timestamp(0)
-  produk     produk?   @relation(fields: [id_produk], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "FK__produk")
   users      users?    @relation(fields: [id_cus], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "FK_user_produk_users")
+  produk     produk?   @relation(fields: [id_produk], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "FK__produk")
 
   @@index([id_cus], map: "id_cus")
   @@index([id_produk], map: "id_produk")
@@ -118,4 +119,9 @@ enum data_produk_fan {
 enum detail_user_gender {
   Male
   Female
+}
+
+enum produk_active {
+  Y
+  N
 }

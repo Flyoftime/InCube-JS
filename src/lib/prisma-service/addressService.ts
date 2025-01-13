@@ -1,5 +1,18 @@
 import prisma from "./prisma";
 
+export const getAllAddress = async () => {
+  try {
+    const detailAddress = await prisma.address.findMany({
+      include: {
+        users: true, // Include related user data
+      },
+    });
+    return detailAddress;
+  } catch (error) {
+    console.error("Error fetching address:", error);
+  }
+};
+
 export const createAddresslUser = async (data: {
   id_user: number;
   Kecamatan?: string;
@@ -22,10 +35,9 @@ export const createAddresslUser = async (data: {
         alamat_lengkap: data.alamat_lengkap,
       },
     });
-    return { success: true, data: newDetailUser };
+    return newDetailUser;
   } catch (error) {
     console.error("Error creating detail_user:", error);
-    return { success: false, error: "Failed to create detail_user" };
   }
 };
 
@@ -37,13 +49,12 @@ export const getAddressByUserId = async (id: number) => {
       },
     });
     if (address) {
-      return { success: true, data: address };
+      return address;
     } else {
-      return { success: false, error: "Address not found" };
+      console.error("address not found");
     }
   } catch (error) {
     console.error("Error fetching address:", error);
-    return { success: false, error: "Failed to fetch address" };
   }
 };
 
@@ -72,10 +83,9 @@ export const updateAddressUser = async (
         alamat_lengkap: data.alamat_lengkap,
       },
     });
-    return { success: true, data: updatedAddress };
+    return updatedAddress;
   } catch (error) {
     console.error("Error updating address:", error);
-    return { success: false, error: "Failed to update address" };
   }
 };
 
@@ -86,9 +96,8 @@ export const deleteAddressUser = async (id: number) => {
         id,
       },
     });
-    return { success: true, data: deletedAddress };
+    return deletedAddress;
   } catch (error) {
     console.error("Error deleting address:", error);
-    return { success: false, error: "Failed to delete address" };
   }
 };

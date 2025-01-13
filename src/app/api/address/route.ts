@@ -1,5 +1,20 @@
-import { createAddresslUser } from "./../../../lib/prisma-service/addressService";
+import {
+  createAddresslUser,
+  getAllAddress,
+} from "./../../../lib/prisma-service/addressService";
 import { NextResponse } from "next/server";
+
+export async function GET() {
+  try {
+    const address = await getAllAddress();
+    return NextResponse.json({ success: true, data: address }, { status: 200 });
+  } catch (error) {
+    return NextResponse.json(
+      { success: false, message: "Failed to fetch address", error },
+      { status: 500 }
+    );
+  }
+}
 
 export async function POST(req: Request) {
   try {

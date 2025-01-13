@@ -38,8 +38,8 @@ const EditProfileForm: React.FC<any> = () => {
           throw new Error("Failed to fetch profile data");
         }
         const data = await response.json();
-        setIdUser(data.data.data.id_user);
-        setProfileData(data.data.data); // Adjust path as necessary
+        setIdUser(data.data.id);
+        setProfileData(data.data); // Adjust path as necessary
       } catch (error) {
         console.error("Error fetching profile data:", error);
       } finally {
