@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import CardIncubeDashboard from "../cardIncubeDashboard";
 import { useRouter } from "next/navigation";
 import { FaEllipsisV, FaLock, FaPlus } from "react-icons/fa";
+import PassKeyModal from "../showModal";
 
 type UserSubs = {
   id: number;
@@ -20,6 +21,7 @@ type UserSubs = {
     telur: number;
     pass_access: string;
     price: number;
+    active: string;
     created_at: string;
   };
   users: {
@@ -36,7 +38,6 @@ const Dashboard = () => {
   const [productId, setProductId] = useState<string | any>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const router = useRouter();
-  const [openall, setOpenall] = useState(false);
 
   useEffect(() => {
     // Ambil userId dari localStorage
@@ -57,9 +58,9 @@ const Dashboard = () => {
         const data = await response.json();
         console.log(data);
 
-        setUserSubsData(data.data.data); // pastikan data berada dalam field 'data'
-        setProductId(data.data.data.produk.id); // Ambil id produk
-        localStorage.setItem("productId", data.data.data.produk.id);
+        setUserSubsData(data.data); // pastikan data berada dalam field 'data'
+        setProductId(data.data.produk.id); // Ambil id produk
+        localStorage.setItem("productId", data.data.produk.id);
       } catch (error) {
         console.error("Error fetching profile data:", error);
       } finally {
@@ -84,7 +85,7 @@ const Dashboard = () => {
           </div>
         </div>
         <a
-          href="setting/add-address" // Use <a> tag for navigation
+          href="subscribe" // Use <a> tag for navigation
           className="btn text-base block mt-4 mx-2 text-center bg-yellow-500 text-white py-2 rounded-md font-medium hover:bg-yellow-600 flex justify-center items-center"
         >
           <FaLock className="mr-2" /> Klik this to subscribe
@@ -95,16 +96,26 @@ const Dashboard = () => {
 
   return (
     <div>
-      {userSubsData.map((subs) => (
-        <CardIncubeDashboard
-          key={subs.id}
-          productId={subs.produk.id}
-          telur={subs.produk.telur}
-          name={subs.produk.nama}
-          tinggi={subs.produk.tinggi}
-          lebar={subs.produk.lebar}
-        />
-      ))}
+      {userSubsData
+        ?.filter((subs) => subs.produk.active === "Y") // Filter hanya produk yang aktif
+        .map((subs) => (
+          <CardIncubeDashboard
+            key={subs.id}
+            productId={subs.produk.id}
+            telur={subs.produk.telur}
+            name={subs.produk.nama}
+            tinggi={subs.produk.tinggi}
+            lebar={subs.produk.lebar}
+          />
+        ))}
+      <div className="w-[350px] md:w-[1430px] h-[300x] p-4 m-5 lg:ml-60 ml-40">
+        <div className="mb-4">
+          <div className="text-gray-700 text-lg font-semibold">
+            Activate your Incube
+          </div>
+        </div>
+        <PassKeyModal></PassKeyModal>
+      </div>
     </div>
   );
 };
