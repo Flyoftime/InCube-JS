@@ -11,11 +11,10 @@ export const getDetailUserSubById = async (id: number) => {
       },
     });
     if (!detailUser) {
-      return { success: false, error: "Detail user not found" };
+      console.error("Error user subscription not found");
     }
-    return { success: true, data: detailUser };
+    return detailUser;
   } catch (error) {
     console.error("Error fetching detail_user:", error);
-    return { success: false, error: "Failed to fetch detail_user" };
   }
 };

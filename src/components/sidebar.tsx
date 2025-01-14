@@ -162,6 +162,8 @@ const Sidebar: React.FC<SidebarProps> = ({ username }) => {
             onClick={() => {
               localStorage.removeItem("id");
               localStorage.removeItem("productId");
+              localStorage.removeItem("humidData");
+              localStorage.removeItem("tempData");
               signOut({
                 redirect: true,
                 callbackUrl: `${window.location.origin}/login`,

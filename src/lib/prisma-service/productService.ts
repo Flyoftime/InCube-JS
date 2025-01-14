@@ -80,6 +80,30 @@ export const getProductById = async (id: string) => {
 };
 
 // Update a product
+export const updateProductStatus = async (
+  id: string,
+  data: Partial<{
+    pass_access: string;
+    active: "Y" | "N";
+  }>
+) => {
+  try {
+    // Update active status to "Y"
+    const updatedProduct = await prisma.produk.update({
+      where: { id },
+      data: {
+        active: "Y",
+      },
+    });
+
+    return updatedProduct;
+  } catch (error) {
+    console.error("Error updating product status:", error);
+    return { error: "Unable to update product status", status: 500 };
+  }
+};
+
+// Update a product
 export const updateProduct = async (
   id: string,
   data: Partial<{
